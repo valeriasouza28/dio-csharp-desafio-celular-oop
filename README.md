@@ -1,22 +1,91 @@
-# DIO - Trilha .NET - Programação orientada a objetos
-www.dio.me
+# Aplicação de Gerenciamento de Smartphones
 
-## Desafio de projeto
-Para este desafio, você precisará usar seus conhecimentos adquiridos no módulo de orientação a objetos, da trilha .NET da DIO.
+## Descrição
+Esta aplicação de gerenciamento de smartphones é um projeto que simula as operações básicas de um celular, como ligar, desligar, adicionar contatos, fazer e receber ligações, e instalar/desinstalar aplicativos. O projeto é desenvolvido em C# utilizando o paradigma de Programação Orientada a Objetos (POO).
 
-## Contexto
-Você é responsável por modelar um sistema que trabalha com celulares. Para isso, foi solicitado que você faça uma abstração de um celular e disponibilize maneiras de diferentes marcas e modelos terem seu próprio comportamento, possibilitando um maior reuso de código e usando a orientação a objetos.
+## Funcionalidades
+- **Ligar e Desligar o Smartphone**: Métodos para ligar e desligar o dispositivo com tratamento para impedir operações redundantes.
+- **Gerenciamento de Contatos**: Adicionar, listar e remover contatos da agenda telefônica com validações para evitar duplicidades e entradas inválidas.
+- **Gerenciamento de Aplicativos**: Instalar e desinstalar aplicativos com validação de estado do dispositivo e nome dos aplicativos.
+- **Fazer e Receber Ligações**: Simular fazer e receber ligações, exibindo o nome do contato se presente na agenda.
 
-## Proposta
-Você precisa criar um sistema em .NET, do tipo console, mapeando uma classe abstrata e classes específicas para dois tipos de celulares: Nokia e iPhone. 
-Você deve criar as suas classes de acordo com o diagrama abaixo:
+## Estrutura do Projeto
+O projeto está organizado nas seguintes classes:
 
-![Diagrama classes](Imagens/diagrama.png)
+### `Smartphone`
+Classe abstrata que define a estrutura básica de um smartphone.
 
-## Regras e validações
-1. A classe **Smartphone** deve ser abstrata, não permitindo instanciar e servindo apenas como modelo.
-2. A classe **Nokia** e **Iphone** devem ser classes filhas de Smartphone.
-3. O método **InstalarAplicativo** deve ser sobrescrito na classe Nokia e iPhone, pois ambos possuem diferentes maneiras de instalar um aplicativo.
+### `Nokia`
+Classe concreta que herda de `Smartphone` e implementa os métodos abstratos para a marca Nokia.
 
-## Solução
-O código está pela metade, e você deverá dar continuidade obedecendo as regras descritas acima, para que no final, tenhamos um programa funcional. Procure pela palavra comentada "TODO" no código, em seguida, implemente conforme as regras acima.
+### `Iphone`
+Classe concreta que herda de `Smartphone` e implementa os métodos abstratos para a marca iPhone (a ser implementado).
+
+## Pré-requisitos
+- .NET SDK
+
+## Executando a Aplicação
+1. Clone o repositório para o seu ambiente local:
+    ```sh
+    git clone https://github.com/seu-usuario/repositorio-smartphones.git
+    ```
+
+2. Navegue até o diretório do projeto:
+    ```sh
+    cd repositorio-smartphones
+    ```
+
+3. Execute o projeto:
+    ```sh
+    dotnet run
+    ```
+
+## Exemplo de Uso
+Aqui está um exemplo de uso das funcionalidades da aplicação:
+
+```csharp
+using DesafioPOO.Models;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Instanciando um objeto da classe Nokia
+        Nokia nokia = new Nokia("1234567890", "Nokia", "A1", "Preto");
+
+        // Testando métodos de ligar e desligar o smartphone
+        nokia.LigarSmartphone();
+        nokia.LigarSmartphone(); // Tentativa de ligar novamente
+        nokia.DesligarSmartphone();
+        nokia.DesligarSmartphone(); // Tentativa de desligar novamente
+        nokia.LigarSmartphone();
+
+        // Testando adicionar contatos na agenda
+        nokia.AdicionarContatoAgenda("Val", "1234567895");
+        nokia.AdicionarContatoAgenda("Avanade", "12345678911");
+
+        // Listando contatos na agenda
+        nokia.ListarContatosAgenda();
+
+        // Removendo contato da agenda
+        nokia.RemoverContatoAgenda("Val");
+        nokia.ListarContatosAgenda();
+
+        // Testando instalação e desinstalação de aplicativos
+        nokia.InstalarAplicativo("Zap");
+        nokia.ListarAplicativos();
+        nokia.DesinstalarAplicativo("Zap");
+        nokia.ListarAplicativos();
+
+        // Testando fazer e receber ligações
+        nokia.Ligar("12345678911");
+        nokia.ReceberLigacao("12345678911");
+
+        // Testando instalação de mais aplicativos
+        nokia.InstalarAplicativo("Instagram");
+        nokia.InstalarAplicativo("Dio.me");
+        nokia.ListarAplicativos();
+        nokia.DesinstalarAplicativo("Instagram");
+        nokia.ListarAplicativos();
+    }
+}
